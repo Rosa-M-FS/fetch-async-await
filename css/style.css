@@ -66,3 +66,31 @@ header {
 #searchBtn:hover, #prevBtn:hover, #nextBtn:hover, #resetBtn:hover {
   opacity: 0.8;
 }
+#app{
+display: flex;
+flex-wrap: wrap;
+justify-content: space-around;
+
+}
+ul{
+ display: flex;
+ flex-wrap: wrap;
+ gap: 20px;
+ list-style-type: none;
+ padding: 0;
+ margin: 0px 80px;
+}
+li{
+background-color: white;
+border-radius:8px ;
+text-align: center;
+box-shadow: 0 4px 8px rgba(0,0,0,0.2) ;
+}
+li img{
+  width: 15rem;
+  height: auto;
+  object-fit: contain;
+}
+li p{
+  font-weight: bold;
+}

@@ -17,14 +17,12 @@ const apiCall = async (url) => {
       return data;
     } catch (error) {
       console.error(error);
-    }
-  };
+}};
 
 const showPokemon = (data)=>{
     const lista=document.createElement("ul");
     
     data.results.forEach(element => {
-        //sprites.other.home.front_default
         apiCall(element.url).then(pokemon=>{
             const pokemonli=document.createElement("li");
            pokemonli.innerHTML+=
@@ -36,14 +34,14 @@ const showPokemon = (data)=>{
     });
     appdiv.innerHTML="";
     appdiv.appendChild(lista);
-}
+};
 
 const fetchPokemon = async () => {
     const results = await apiCall(api);
     showPokemon(results);
-  };
+};
   
-  fetchPokemon();
+fetchPokemon();
 
 prevBtn.addEventListener("click",()=>{
     if (page>0){
@@ -51,20 +49,47 @@ prevBtn.addEventListener("click",()=>{
         api =`https://pokeapi.co/api/v2/pokemon?offset=${page}&limit=10`;
         fetchPokemon();
     }
-})
+});
+
 nextBtn.addEventListener("click",()=>{
-    if(page<1300){
-        page+=10;
+    if (page < 1300){
+        page += 10;
         api =`https://pokeapi.co/api/v2/pokemon?offset=${page}&limit=10`;
         fetchPokemon();
-    }}
-)
+    }
+  }
+);
+
 resetBtn.addEventListener("click", () => {
     page = 0;
     api = `https://pokeapi.co/api/v2/pokemon?offset=${page}&limit=10`;
     fetchPokemon();
-  });
+  }
+);
 
 searchBtn.addEventListener("click", () => {
+  const nombre = searchInput.value.toLowerCase();
 
-});
+  if (!nombre) {
+      alert("Por favor, introduce un nombre para buscar");
+      return;
+  }
+
+  const searchApi = `https://pokeapi.co/api/v2/pokemon/${nombre}`;
+
+  apiCall(searchApi)
+      .then((pokemon) => {
+          const lista = document.createElement("ul");
+          const pokemonli = document.createElement("li");
+          pokemonli.innerHTML = `
+              <img src="${pokemon.sprites.other.home.front_default}" alt="Imagen ${pokemon.name}">
+              <p>${pokemon.name}</p>`;
+          lista.appendChild(pokemonli);
+          appdiv.innerHTML = "";
+          appdiv.appendChild(lista);
+      })
+      .catch(() => {
+          alert("No se puede encontrar ese Pokémon");
+      });
+  }
+);
